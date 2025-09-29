@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pinterest-Style To-Do List</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
+    body {
+        min-height: 100vh;
+        background: url('https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .todo-container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        border-radius: 15px;
+        width: 350px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .input-container {
+        display: flex;
+        margin-bottom: 20px;
+    }
+
+    .input-container input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 5px 0 0 5px;
+        outline: none;
+    }
+
+    .input-container button {
+        padding: 10px 15px;
+        border: none;
+        background: #ff6b6b;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 0 5px 5px 0;
+        transition: 0.3s;
+    }
+
+    .input-container button:hover {
+        background: #ff4757;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    li {
+        background: #f7f7f7;
+        margin-bottom: 10px;
+        padding: 12px 15px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        transition: 0.2s;
+    }
+
+    li.completed {
+        text-decoration: line-through;
+        opacity: 0.6;
+    }
+
+    li button {
+        background: #ff6b6b;
+        border: none;
+        padding: 5px 8px;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    li button:hover {
+        background: #ff4757;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="todo-container">
+    <h1>My To-Do List</h1>
+    <div class="input-container">
+        <input type="text" id="todoInput" placeholder="Add a new task...">
+        <button onclick="addTodo()">Add</button>
+    </div>
+    <ul id="todoList"></ul>
+</div>
+
+<script>
+const todoList = document.getElementById('todoList');
+const todoInput = document.getElementById('todoInput');
+
+function addTodo() {
+    const task = todoInput.value.trim();
+    if(task === '') return;
+    
+    const li = document.createElement('li');
+    li.innerHTML = `
+        <span onclick="toggleComplete(this)">${task}</span>
+        <button onclick="deleteTodo(this)">✖</button>
+    `;
+    todoList.appendChild(li);
+    todoInput.value = '';
+}
+
+function deleteTodo(button) {
+    const li = button.parentElement;
+    li.remove();
+}
+
+function toggleComplete(span) {
+    span.parentElement.classList.toggle('completed');
+}
+
+// Optional: press Enter to add task
+todoInput.addEventListener('keypress', function(e){
+    if(e.key === 'Enter'){
+        addTodo();
+    }
+});
+</script>
+
+</body>
+</html>
